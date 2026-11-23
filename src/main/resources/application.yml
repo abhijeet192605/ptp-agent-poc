@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ptp-agent-poc
+  datasource:
+    # File-based H2: calls and promises survive a restart. Delete the ./data folder to reset.
+    url: jdbc:h2:file:./data/ptp;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+  sql:
+    init:
+      mode: always
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      init:
+        # We already ran `ollama pull qwen2.5:3b`, so never auto-download.
+        pull-model-strategy: never
+      chat:
+        options:
+          model: qwen2.5:3b      # keep the model name in config, never in code
+          temperature: 0.1       # low temperature for extraction
+          num-ctx: 4096          # keep memory use small on an 8 GB machine
+          num-predict: 300       # replies are short; this stops a runaway generation from hanging a call
+
+logging:
+  level:
+    com.bytewise.ptp: DEBUG

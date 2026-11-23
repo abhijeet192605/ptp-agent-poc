@@ -1,0 +1,12 @@
+target/
+.tools/
+.idea/
+*.iml
+.vscode/
+.github/modernize/
+
+# local H2 database files (call transcripts, saved promises, payment links)
+data/
+data-verify/
+
+*.log
